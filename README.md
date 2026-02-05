@@ -4,11 +4,19 @@
 
 Open-source WebSocket gateway for connecting your phone directly to your AI agents. No Telegram. No Discord. No third-party servers seeing your messages.
 
-This is the self-hosted backend for [Open-Shell-Phone](https://github.com/loserbcc/Open-Shell-Phone) — a private hotline between you and your moltbots.
+<p align="center">
+  <img src="docs/images/open-shell-icon.png" alt="ShellPhone" width="128">
+</p>
 
 <p align="center">
-  <img src="docs/images/open-shell-icon.png" alt="Open-Shell" width="128">
+  <a href="https://testflight.apple.com/join/BnjD4BEf"><img src="https://img.shields.io/badge/TestFlight-Join_Beta-blue?logo=apple" alt="TestFlight"></a>
+  <a href="https://github.com/loserbcc/openclaw-gateway/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-MIT-green" alt="MIT License"></a>
+  <a href="https://scrappylabs.ai"><img src="https://img.shields.io/badge/Free_TTS-ScrappyLabs-orange" alt="ScrappyLabs"></a>
 </p>
+
+## Get the App
+
+**[ShellPhone on TestFlight](https://testflight.apple.com/join/BnjD4BEf)** — free iOS client for this gateway. Join the public beta.
 
 ## Why?
 
