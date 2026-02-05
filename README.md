@@ -1,140 +1,179 @@
 # OpenClaw Gateway
 
-Open-source WSS gateway for connecting phones to moltbots. This is the backend server for [ClawPhone](https://github.com/loserbcc/claw-phone) — a direct hotline between your phone and your AI agents.
+**Your bots, your phone, your data. No middleman.**
 
-## Quick Start (Docker)
+Open-source WebSocket gateway for connecting your phone directly to your AI agents. No Telegram. No Discord. No third-party servers seeing your messages.
+
+This is the self-hosted backend for [Open-Shell-Phone](https://github.com/loserbcc/Open-Shell-Phone) — a private hotline between you and your moltbots.
+
+<p align="center">
+  <img src="docs/images/open-shell-icon.png" alt="Open-Shell" width="128">
+</p>
+
+## Why?
+
+Every bot platform sees everything:
+- Telegram reads your bot conversations
+- Discord logs every message
+- "AI assistant" apps route through their servers
+
+OpenClaw Gateway runs on **your hardware**. Messages travel directly from your phone to your server over encrypted WebSocket. Zero third-party visibility.
+
+**Plus**: Connect to [ScrappyLabs](https://scrappylabs.ai) for free TTS, voice cloning, and speech recognition. No account required. No spam. Just free tools for builders.
+
+---
+
+## Quick Start
+
+### Docker (Recommended)
 
 ```bash
 git clone https://github.com/loserbcc/openclaw-gateway.git
 cd openclaw-gateway
-cp .env.example .env
 docker compose up
 ```
 
-The gateway starts on port `8770`. Your auth token is auto-generated and printed to the console on first run.
-
-## Quick Start (Python)
+### Python
 
 ```bash
 pip install openclaw-gateway
 openclaw-gateway
 ```
 
-Or from source:
+The gateway starts on port `8770`. Your auth token is printed to the console on first run.
+
+---
+
+## Connect Your Phone
+
+### Option 1: Scan QR Code (Easiest)
 
 ```bash
-git clone https://github.com/loserbcc/openclaw-gateway.git
-cd openclaw-gateway
-pip install -e .
-cp .env.example .env
-openclaw-gateway
+openclaw-gateway --qr
 ```
+
+Opens a QR code in your terminal. Scan it with Open-Shell-Phone to connect instantly.
+
+Or visit `http://localhost:8770/setup` for a web-based QR code.
+
+### Option 2: Manual Entry
+
+In Open-Shell-Phone, add a new gateway:
+- **URL**: `wss://your-server:8770/gateway`
+- **Token**: paste the auth token from console
+
+### Remote Access (Tailscale)
+
+For secure access from anywhere without port forwarding:
+
+```bash
+tailscale serve https 8770
+```
+
+Then use your Tailscale hostname: `wss://your-machine.ts.net/gateway`
+
+---
 
 ## How It Works
 
 ```
-Phone (ClawPhone)  ──WSS──►  OpenClaw Gateway  ──►  LLM (ollama/OpenAI/Claude)
+┌─────────────────┐         ┌──────────────────┐         ┌─────────────────┐
+│  Open-Shell     │  WSS    │  OpenClaw        │         │  Your LLM       │
+│  Phone App      │ ──────► │  Gateway         │ ──────► │  (ollama/etc)   │
+└─────────────────┘         └──────────────────┘         └─────────────────┘
                                     │
-                                    ├──►  TTS (OpenAI-compatible)
-                                    └──►  ASR (Whisper-compatible)
+                                    ├──► TTS (ScrappyLabs / local)
+                                    └──► ASR (ScrappyLabs / Whisper)
 ```
 
-1. ClawPhone connects via WebSocket to `/gateway`
-2. OpenClaw v3 handshake authenticates with your token
-3. You send text/voice → gateway routes to your LLM
-4. LLM response streams back to your phone in real-time
-5. Optional: TTS audio sent back for spoken responses
+1. Phone connects via encrypted WebSocket
+2. You send text or voice
+3. Gateway routes to your LLM (local or cloud)
+4. Response streams back in real-time
+5. Optional: TTS audio for spoken responses
+
+---
 
 ## Configuration
 
-All settings via environment variables (prefix `OPENCLAW_`) or `.env` file:
+Environment variables or `.env` file:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `OPENCLAW_PORT` | `8770` | Server port |
-| `OPENCLAW_AUTH_TOKEN` | auto-generated | Auth token for phone connections |
+| `OPENCLAW_AUTH_TOKEN` | auto | Auth token (auto-generated if not set) |
 | `OPENCLAW_LLM_PROVIDER` | `auto` | `auto`, `openai`, `anthropic`, `ollama` |
 | `OPENCLAW_LLM_BASE_URL` | — | Custom OpenAI-compatible endpoint |
 | `OPENCLAW_LLM_API_KEY` | — | API key for cloud LLM |
-| `OPENCLAW_LLM_MODEL` | auto-detected | Model name |
-| `OPENCLAW_TTS_PROVIDER` | `disabled` | `auto`, `openai`, `scrappylabs`, `disabled` |
-| `OPENCLAW_ASR_PROVIDER` | `disabled` | `auto`, `openai`, `whisper`, `disabled` |
+| `OPENCLAW_TTS_PROVIDER` | `scrappylabs` | `scrappylabs`, `openai`, `local`, `disabled` |
+| `OPENCLAW_ASR_PROVIDER` | `scrappylabs` | `scrappylabs`, `whisper`, `disabled` |
 
-### Auto-Detection
+### Zero-Config Local LLM
 
-With `OPENCLAW_LLM_PROVIDER=auto` (default), the gateway:
-
-1. Checks for local **ollama** at `localhost:11434` — uses the first available model
-2. Falls back to cloud API if `OPENCLAW_LLM_API_KEY` is set
-
-This means if you have ollama running, it just works with zero config.
-
-## Connecting ClawPhone
-
-1. Start the gateway
-2. Note the auth token from the console output
-3. In ClawPhone, add a new gateway:
-   - **URL**: `wss://your-server:8770/gateway` (or use Tailscale hostname)
-   - **Token**: paste the auth token
-
-### Tailscale (Recommended)
-
-For secure remote access without port forwarding:
+If you have **ollama** running, the gateway auto-detects it. No config needed.
 
 ```bash
-# On the machine running the gateway
-tailscale serve https 8770
+# Start ollama with any model
+ollama run llama3
+
+# Start gateway — it finds ollama automatically
+openclaw-gateway
 ```
 
-Then in ClawPhone, use your Tailscale hostname: `wss://your-machine.your-tailnet.ts.net/gateway`
+### ScrappyLabs Integration (Free)
+
+TTS and speech recognition powered by [ScrappyLabs](https://scrappylabs.ai):
+
+- 50+ voices including character clones
+- Voice design from text descriptions
+- Fast speech recognition
+
+No API key needed. No account. No rate limits for reasonable use. Just works.
+
+---
 
 ## REST API
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
 | `/` | GET | Server info |
-| `/health` | GET | Health check + provider status |
+| `/health` | GET | Health check |
+| `/setup` | GET | QR code for phone connection |
 | `/messages` | GET | Message history |
 | `/voice` | POST | Upload audio for transcription |
-| `/files/upload` | POST | Upload files |
 
-## Protocol
+---
 
-OpenClaw v3 — lightweight JSON frames over WebSocket.
+## Roadmap
 
-### Frame Types
+- [x] WebSocket gateway with OpenClaw v3 protocol
+- [x] Auto-detect local ollama
+- [x] ScrappyLabs TTS/ASR integration
+- [ ] QR code connection setup (`--qr` flag + `/setup` endpoint)
+- [ ] Web dashboard for message history
+- [ ] Multi-user support
+- [ ] Plugin system for custom handlers
+- [ ] Matrix/XMPP bridge
 
-**Request** (client → server):
-```json
-{"type": "req", "id": "uuid", "method": "chat.send", "params": {"message": "hello"}}
-```
+---
 
-**Response** (server → client):
-```json
-{"type": "res", "id": "uuid", "ok": true, "payload": {"status": "accepted", "runId": "abc123"}}
-```
+## Community
 
-**Event** (server → client):
-```json
-{"type": "event", "event": "chat", "payload": {"runId": "abc123", "state": "delta", "text": "Hello"}}
-```
+This is a community project. Take it where you want.
 
-### Connection Flow
+- **Issues**: Bug reports, feature requests
+- **PRs**: Contributions welcome
+- **Discussions**: Ideas, use cases, show & tell
 
-1. Server sends `connect.challenge`
-2. Client sends `connect` request with auth token
-3. Server responds with `hello-ok`
-4. Client sends `chat.send` requests
-5. Server streams `chat` events (delta → final) + `agent` lifecycle events
-
-## Development
-
-```bash
-pip install -e ".[dev]"
-pytest
-ruff check .
-```
+---
 
 ## License
 
-MIT
+MIT — do whatever you want with it.
+
+---
+
+<p align="center">
+  <i>Part of the <a href="https://scrappylabs.ai">ScrappyLabs</a> ecosystem</i><br>
+  <i>Free tools for builders. No money. No spam.</i>
+</p>
